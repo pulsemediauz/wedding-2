@@ -204,7 +204,7 @@
           <text x="50%" y="54%" text-anchor="middle" fill="#b89c6b" font-family="Cormorant Garamond, serif" font-size="36" font-weight="600">R</text>
           <text x="53%" y="76%" text-anchor="middle" fill="#b89c6b" font-family="Cormorant Garamond, serif" font-size="36" font-weight="600">M</text>
         </svg>
-        <h1 id="title">Свадьба<br><small>Ramazon &amp; Mohinur</small></h1>
+        <h1 id="title">ПРИГЛАШЕНИЕ НА СВАДЬБУ<br><small>Ramazon &amp; Mohinur</small></h1>
       </div>
       <div class="brand" aria-hidden="true" style="font-variant: all-small-caps; letter-spacing:.12em; color:var(--gold);">Invitation</div>
     </header>
@@ -218,15 +218,15 @@
       <div class="info" aria-label="Детали события">
         <div class="tile">
           <h3>Дата и Время</h3>
-          <p><time id="datePretty" datetime="2025-09-07T19:30:00+05:00">7 сентября, 19:30</time></p>
+          <p><time id="datePretty" datetime="2025-09-07T19:00:00+05:00">7 сентября, 19:00</time></p>
         </div>
         <div class="tile">
           <h3>Место</h3>
-          <p>Ресторан <strong>Amarant</strong>, Ташкент</p>
+          <p>Ресторан <strong>Brenhall</strong>, Ташкент</p>
         </div>
         <div class="tile">
           <h3>Дресс-код</h3>
-          <p>Элегантный, светлые тона</p>
+          <p>Элегантный</p>
         </div>
       </div>
 
@@ -235,7 +235,6 @@
         <div class="cd-item"><b id="d">—</b><span>дней</span></div>
         <div class="cd-item"><b id="h">—</b><span>часов</span></div>
         <div class="cd-item"><b id="m">—</b><span>минут</span></div>
-        <div class="cd-item"><b id="s">—</b><span>секунд</span></div>
       </div>
 
       <!-- Кнопки действий -->
@@ -245,13 +244,8 @@
           <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 2v2H5a2 2 0 0 0-2 2v1h18V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2zM3 9v9a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9zm4 3h4v4H7z"/></svg>
           Добавить в календарь
         </a>
-        <!-- .ics как data URI -->
-        <a class="btn secondary" id="ics" download="Ramazon-Mohinur.ics">
-          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zm0 2.5L18.5 9H14zM8 13h8v2H8zm0 4h8v2H8z"/></svg>
-          Скачать .ics
-        </a>
         <!-- Навигация -->
-        <a class="btn" id="navbtn" target="_blank" rel="noopener">
+        <a class="btn" id="navbtn" target="_blank" rel="noopener" href="https://yandex.uz/maps/-/CLA05-Ln">
           <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2l4 7-4 13-4-13 4-7z"/></svg>
           Проложить маршрут
         </a>
@@ -260,9 +254,9 @@
       <!-- Встроенная карта (можно удалить, если не нужна) -->
       <div class="map" aria-label="Карта локации">
         <iframe
-          title="Карта — Amarant, Ташкент"
+          title="Карта — Brendhall, Ташкент"
           loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-          src="https://maps.google.com/maps?q=Amarant%20Tashkent&t=m&z=14&output=embed&iwloc=near">
+          src="https://yandex.uz/maps/-/CLA05-Ln">
         </iframe>
       </div>
 
@@ -286,7 +280,7 @@
 /* ==== Параметры события (локальное время Ташкента, UTC+05:00) ==== */
 const eventLocalISO = "2025-09-07T19:30:00+05:00"; // если нужен другой год — поменяйте здесь
 const title = "Свадьба Ramazon & Mohinur";
-const venue = "Ресторан Amarant, Ташкент";
+const venue = "Ресторан Brendhall, Ташкент";
 
 /* ==== Красивые «лепестки» на canvas ==== */
 (function flakes(){
