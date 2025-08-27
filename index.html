@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Приглашение на свадьбу — Ramazon & Mohinur</title>
+<meta name="description" content="Свадебное приглашение: Ramazon и Mohinur — 7 сентября, 19:30, ресторан Amarant, Ташкент." />
+<meta name="theme-color" content="#f7f3ef" />
+
+<!-- Шрифты (необязательно: при офлайн-режиме будут системные) -->
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#f7f3ef;
+    --ink:#2a2a2a;
+    --muted:#6f6b67;
+    --gold:#b89c6b;
+    --glass: rgba(255,255,255,.6);
+    --ring:#d4c3a1;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family: "Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,system-ui,sans-serif;
+    color:var(--ink);
+    background: var(--bg);
+    overflow-x:hidden;
+  }
+
+  /* Фоновая «акварель» и частицы */
+  .backdrop{
+    position:fixed; inset:0; overflow:hidden; z-index:-2;
+    background:
+      radial-gradient(60vmax 60vmax at 10% 20%, #fffaf4 0%, transparent 60%),
+      radial-gradient(50vmax 50vmax at 90% 10%, #faf5ee 0%, transparent 60%),
+      radial-gradient(65vmax 65vmax at 80% 90%, #fff6f8 0%, transparent 60%),
+      radial-gradient(70vmax 70vmax at 20% 85%, #f7fbff 0%, transparent 60%),
+      var(--bg);
+  }
+  canvas#flakes{position:fixed; inset:0; z-index:-1; pointer-events:none; opacity:.5}
+
+  /* Карточка */
+  .wrap{
+    min-height:100%;
+    display:grid;
+    place-items:center;
+    padding:8vmin 3vmin 14vmin;
+  }
+  .card{
+    width:min(920px, 92vw);
+    background: linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,.35));
+    border-radius:28px;
+    backdrop-filter:saturate(1.4) blur(10px);
+    -webkit-backdrop-filter:saturate(1.4) blur(10px);
+    box-shadow: 0 30px 70px rgba(0,0,0,.08);
+    border:1px solid rgba(255,255,255,.7);
+    overflow:hidden;
+    position:relative;
+  }
+  .top{
+    padding:44px 38px 18px;
+    display:flex; align-items:center; gap:22px; justify-content:space-between;
+  }
+  .monogram{
+    display:flex; align-items:center; gap:16px;
+  }
+  .monogram svg{
+    width:66px; height:66px;
+    filter: drop-shadow(0 6px 12px rgba(184,156,107,.25));
+  }
+  .monogram h1{
+    font-family:"Cormorant Garamond",serif;
+    letter-spacing:.08em;
+    font-weight:600; margin:0;
+    font-size: clamp(26px, 3.4vw, 42px);
+  }
+  .monogram h1 small{
+    display:block; font-weight:300; letter-spacing:.12em; color:var(--muted);
+    font-size:.55em; margin-top:2px;
+  }
+
+  .divider{
+    height:1px; margin:0 28px; background:linear-gradient(90deg, transparent, rgba(184,156,107,.6), transparent);
+  }
+
+  .hero{
+    padding:28px clamp(20px,4vmin,40px) 36px;
+    text-align:center;
+  }
+  .names{
+    font-family:"Cormorant Garamond",serif;
+    font-size: clamp(40px, 7.2vw, 88px);
+    margin:6px 0 10px;
+    letter-spacing:.04em;
+    line-height:1.1;
+  }
+  .amp{
+    display:inline-block; transform:translateY(-.1em);
+    font-size:.85em; color:var(--gold);
+  }
+  .subtitle{
+    color:var(--muted); margin:0 auto 18px; max-width:60ch;
+    font-size:clamp(14px,2.4vw,18px);
+  }
+
+  .info{
+    display:grid; gap:18px;
+    grid-template-columns: repeat(3, minmax(0,1fr));
+    margin: 10px auto 12px; max-width:900px; padding: 0 18px;
+  }
+  .tile{
+    padding:18px 14px 20px; border-radius:16px;
+    border:1px dashed rgba(184,156,107,.45);
+    background: rgba(255,255,255,.45);
+  }
+  .tile h3{
+    margin:6px 0 6px; font-weight:600; letter-spacing:.06em; color:var(--gold);
+    font-size: clamp(12px, 1.8vw, 13px); text-transform: uppercase;
+  }
+  .tile p{ margin:0; font-size:clamp(15px,2.6vw,18px); }
+
+  .countdown{
+    margin: 8px auto 18px; padding: 12px 20px;
+    display:inline-grid; grid-auto-flow:column; gap:14px;
+    border-radius:999px; border:1px solid rgba(184,156,107,.45);
+    background:rgba(255,255,255,.6);
+  }
+  .cd-item{ text-align:center; min-width:70px; }
+  .cd-item b{ display:block; font-size:clamp(20px,4.6vw,28px); font-variant-numeric:tabular-nums; }
+  .cd-item span{ display:block; font-size:12px; color:var(--muted); letter-spacing:.08em; text-transform:uppercase;}
+
+  .cta{
+    display:flex; flex-wrap:wrap; gap:12px; align-items:center; justify-content:center;
+    margin: 18px 0 6px;
+  }
+  .btn{
+    appearance:none; border:none; cursor:pointer;
+    padding:12px 18px; border-radius:14px;
+    font-weight:600; letter-spacing:.04em;
+    background:linear-gradient(180deg,#f9efe1,#f3e6d2);
+    color:#5a4a2f; box-shadow:0 8px 18px rgba(184,156,107,.28), inset 0 1px 0 rgba(255,255,255,.85);
+    transition: transform .2s ease, box-shadow .2s ease;
+    text-decoration:none; display:inline-flex; gap:10px; align-items:center;
+  }
+  .btn:hover{ transform: translateY(-2px); box-shadow:0 12px 24px rgba(184,156,107,.33), inset 0 1px 0 rgba(255,255,255,.9); }
+  .btn.secondary{
+    background:linear-gradient(180deg,#ffffff,#f4f1ed);
+    color:#3b3b3b;
+  }
+
+  .map{
+    margin:24px 0 12px; border-radius:18px; overflow:hidden;
+    border:1px solid rgba(184,156,107,.4);
+  }
+  .map iframe{
+    width:100%; height:320px; display:block; filter:grayscale(.1) saturate(.9) contrast(1.05);
+  }
+
+  .footer{
+    padding:16px 28px 28px; text-align:center; color:var(--muted); font-size:14px;
+  }
+  .footer .copy{opacity:.8}
+
+  /* Адаптив */
+  @media (max-width: 800px){
+    .info{ grid-template-columns:1fr; }
+  }
+
+  /* Декоративные кольца */
+  .rings::before, .rings::after{
+    content:""; position:absolute; border-radius:999px; pointer-events:none;
+    border:2px solid var(--ring); opacity:.7;
+  }
+  .rings::before{ width:220px; height:220px; top:-80px; right:-80px; transform:rotate(18deg); }
+  .rings::after{ width:140px; height:140px; bottom:-50px; left:-50px; transform:rotate(-12deg); }
+
+  /* Учитываем предпочтения по анимации */
+  @media (prefers-reduced-motion: reduce){
+    .btn, .countdown, #flakes{ animation:none !important; transition:none !important }
+  }
+</style>
+</head>
+<body>
+<div class="backdrop"></div>
+<canvas id="flakes" aria-hidden="true"></canvas>
+
+<main class="wrap">
+  <section class="card rings" role="article" aria-labelledby="title">
+    <header class="top">
+      <div class="monogram" aria-label="Монограмма">
+        <!-- Элегантная монограмма в SVG -->
+        <svg viewBox="0 0 120 120" aria-hidden="true">
+          <defs>
+            <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+              <stop offset="0" stop-color="#cdb790"/>
+              <stop offset="1" stop-color="#9f8251"/>
+            </linearGradient>
+          </defs>
+          <circle cx="60" cy="60" r="56" fill="none" stroke="url(#g)" stroke-width="2"/>
+          <path d="M45 82c8-6 13-16 13-28 0-11-4-20-12-26M75 38c-8 6-13 16-13 28 0 11 4 20 12 26"
+                fill="none" stroke="url(#g)" stroke-width="3" stroke-linecap="round"/>
+          <text x="50%" y="54%" text-anchor="middle" fill="#b89c6b" font-family="Cormorant Garamond, serif" font-size="36" font-weight="600">R</text>
+          <text x="53%" y="76%" text-anchor="middle" fill="#b89c6b" font-family="Cormorant Garamond, serif" font-size="36" font-weight="600">M</text>
+        </svg>
+        <h1 id="title">Свадьба<br><small>Ramazon &amp; Mohinur</small></h1>
+      </div>
+      <div class="brand" aria-hidden="true" style="font-variant: all-small-caps; letter-spacing:.12em; color:var(--gold);">Invitation</div>
+    </header>
+
+    <div class="divider" role="separator"></div>
+
+    <section class="hero">
+      <div class="subtitle">С теплом приглашаем вас разделить с нами день нашей любви</div>
+      <div class="names" aria-label="Имена">Ramazon <span class="amp">&amp;</span> Mohinur</div>
+
+      <div class="info" aria-label="Детали события">
+        <div class="tile">
+          <h3>Дата и Время</h3>
+          <p><time id="datePretty" datetime="2025-09-07T19:30:00+05:00">7 сентября, 19:30</time></p>
+        </div>
+        <div class="tile">
+          <h3>Место</h3>
+          <p>Ресторан <strong>Amarant</strong>, Ташкент</p>
+        </div>
+        <div class="tile">
+          <h3>Дресс-код</h3>
+          <p>Элегантный, светлые тона</p>
+        </div>
+      </div>
+
+      <!-- Таймер -->
+      <div class="countdown" aria-live="polite" aria-label="Обратный отсчёт">
+        <div class="cd-item"><b id="d">—</b><span>дней</span></div>
+        <div class="cd-item"><b id="h">—</b><span>часов</span></div>
+        <div class="cd-item"><b id="m">—</b><span>минут</span></div>
+        <div class="cd-item"><b id="s">—</b><span>секунд</span></div>
+      </div>
+
+      <!-- Кнопки действий -->
+      <div class="cta">
+        <!-- Google Calendar -->
+        <a class="btn" id="gcal" target="_blank" rel="noopener">
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7 2v2H5a2 2 0 0 0-2 2v1h18V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2zM3 9v9a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V9zm4 3h4v4H7z"/></svg>
+          Добавить в календарь
+        </a>
+        <!-- .ics как data URI -->
+        <a class="btn secondary" id="ics" download="Ramazon-Mohinur.ics">
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zm0 2.5L18.5 9H14zM8 13h8v2H8zm0 4h8v2H8z"/></svg>
+          Скачать .ics
+        </a>
+        <!-- Навигация -->
+        <a class="btn" id="navbtn" target="_blank" rel="noopener">
+          <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2l4 7-4 13-4-13 4-7z"/></svg>
+          Проложить маршрут
+        </a>
+      </div>
+
+      <!-- Встроенная карта (можно удалить, если не нужна) -->
+      <div class="map" aria-label="Карта локации">
+        <iframe
+          title="Карта — Amarant, Ташкент"
+          loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+          src="https://maps.google.com/maps?q=Amarant%20Tashkent&t=m&z=14&output=embed&iwloc=near">
+        </iframe>
+      </div>
+
+      <div class="cta" style="margin-top:10px">
+        <button class="btn secondary" id="copyAddr">
+          Скопировать адрес
+        </button>
+        <a class="btn" href="mailto:?subject=Свадьба Ramazon &amp; Mohinur — 7 сентября&body=Будем рады видеть вас 7 сентября в 19:30 в ресторане Amarant, Ташкент."
+           >Поделиться приглашением</a>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div>С любовью, Ramazon &amp; Mohinur</div>
+      <div class="copy">© 2025</div>
+    </footer>
+  </section>
+</main>
+
+<script>
+/* ==== Параметры события (локальное время Ташкента, UTC+05:00) ==== */
+const eventLocalISO = "2025-09-07T19:30:00+05:00"; // если нужен другой год — поменяйте здесь
+const title = "Свадьба Ramazon & Mohinur";
+const venue = "Ресторан Amarant, Ташкент";
+
+/* ==== Красивые «лепестки» на canvas ==== */
+(function flakes(){
+  const c = document.getElementById('flakes');
+  const ctx = c.getContext('2d');
+  let W=innerWidth, H=innerHeight;
+  c.width=W; c.height=H;
+  let flakes = Array.from({length: 70}, () => seed());
+
+  function seed(){
+    return {
+      x: Math.random()*W,
+      y: Math.random()*H,
+      r: Math.random()*2.2 + .6,
+      v: Math.random()*0.4 + 0.15,
+      sway: Math.random()*1.2 + 0.2,
+      phi: Math.random()*Math.PI*2
+    }
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    flakes.forEach(f=>{
+      f.y += f.v;
+      f.x += Math.sin(f.phi += 0.01) * f.sway;
+      if(f.y > H+10){ f.y = -10; f.x = Math.random()*W; }
+      ctx.beginPath();
+      ctx.arc(f.x, f.y, f.r, 0, Math.PI*2);
+      ctx.fillStyle = "rgba(184,156,107,.18)";
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+  addEventListener('resize', ()=>{W=innerWidth; H=innerHeight; c.width=W; c.height=H;}, {passive:true});
+})();
+
+/* ==== Обратный отсчёт ==== */
+(function countdown(){
+  const d=document.getElementById('d'),
+        h=document.getElementById('h'),
+        m=document.getElementById('m'),
+        s=document.getElementById('s');
+
+  function tick(){
+    const now = new Date();
+    const eventDate = new Date(eventLocalISO);
+    const diff = eventDate - now;
+    if(diff <= 0){
+      d.textContent = h.textContent = m.textContent = s.textContent = "00";
+      return;
+    }
+    const sec = Math.floor(diff/1000);
+    const days = Math.floor(sec/86400);
+    const hours = Math.floor((sec%86400)/3600);
+    const mins = Math.floor((sec%3600)/60);
+    const secs = sec%60;
+    d.textContent = String(days).padStart(2,'0');
+    h.textContent = String(hours).padStart(2,'0');
+    m.textContent = String(mins).padStart(2,'0');
+    s.textContent = String(secs).padStart(2,'0');
+  }
+  tick(); setInterval(tick, 1000);
+})();
+
+/* ==== Красивый вывод даты по локали ==== */
+(function prettyDate(){
+  const el = document.getElementById('datePretty');
+  const date = new Date(eventLocalISO);
+  const fmt = new Intl.DateTimeFormat('ru-RU', { weekday:'long', day:'numeric', month:'long', hour:'2-digit', minute:'2-digit', timeZoneName:'short' });
+  el.textContent = fmt.format(date);
+})();
+
+/* ==== Календарь (Google) и .ics ==== */
+(function calendars(){
+  const start = new Date(eventLocalISO);
+  const end = new Date(start.getTime() + 4 * 60 * 60 * 1000); // +4 часа
+  function toGCalDate(d){
+    const pad=n=>String(n).padStart(2,"0");
+    return d.getUTCFullYear()+pad(d.getUTCMonth()+1)+pad(d.getUTCDate())+"T"+pad(d.getUTCHours())+pad(d.getUTCMinutes())+"00Z";
+  }
+  const g = document.getElementById('gcal');
+  const gUrl = new URL("https://www.google.com/calendar/render");
+  gUrl.searchParams.set("action","TEMPLATE");
+  gUrl.searchParams.set("text", title);
+  gUrl.searchParams.set("details", "Будем рады видеть вас!");
+  gUrl.searchParams.set("location", venue);
+  gUrl.searchParams.set("dates", toGCalDate(start)+"/"+toGCalDate(end));
+  g.href = gUrl.toString();
+
+  const ics = document.getElementById('ics');
+  const uid = "ramazon-mohinur-"+ Date.now() +"@invite";
+  const icsText = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//Wedding Invite//RU",
+    "CALSCALE:GREGORIAN",
+    "METHOD:PUBLISH",
+    "BEGIN:VEVENT",
+    "DTSTAMP:"+toGCalDate(new Date()),
+    "UID:"+uid,
+    "SUMMARY:"+title,
+    "DTSTART:"+toGCalDate(start),
+    "DTEND:"+toGCalDate(end),
+    "LOCATION:"+venue,
+    "DESCRIPTION:Будем рады видеть вас!",
+    "END:VEVENT",
+    "END:VCALENDAR"
+  ].join("\r\n");
+  ics.href = "data:text/calendar;charset=utf-8," + encodeURIComponent(icsText);
+})();
+
+/* ==== Навигация и копирование адреса ==== */
+(function helpers(){
+  const addr = "Ресторан Amarant, Ташкент";
+  const maps = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addr)}`;
+  document.getElementById('navbtn').href = maps;
+
+  document.getElementById('copyAddr').addEventListener('click', async ()=>{
+    try{
+      await navigator.clipboard.writeText(addr);
+      const b = event.currentTarget;
+      const old = b.textContent;
+      b.textContent = "Адрес скопирован!";
+      setTimeout(()=> b.textContent = old, 1800);
+    }catch(e){
+      alert("Не удалось скопировать. Адрес: " + addr);
+    }
+  }, {passive:true});
+})();
+</script>
+</body>
+</html>
